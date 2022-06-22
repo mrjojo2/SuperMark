@@ -4,13 +4,13 @@ public class Login {
 	// loguearme boolean
 	
 	public boolean loguearme (){
-		return ;
+		return true;
 	}
 	
 	// generar Query String
 	
 	public String consultaBase (){
-		return  ;
+		return  "";
 	}
 } // cierre clases
 

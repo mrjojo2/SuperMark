@@ -3,11 +3,11 @@ import java.util.ArrayList;
 
 public class Carrito {
 	private ArrayList <ProductoCarrito> productos;
-	private flota total;
+	private float total;
 	private Date fecha;
 	private int codigo;
 
-	public Carrito(ArrayList productos, flota total, Date fecha, int codigo) {
+	public Carrito(ArrayList productos, float total, Date fecha, int codigo) {
 		this.productos = productos;
 		this.total = total;
 		this.fecha = fecha;
@@ -22,11 +22,11 @@ public class Carrito {
 		this.productos = productos;
 	}
 
-	public flota getTotal() {
+	public float getTotal() {
 		return total;
 	}
 
-	public void setTotal(flota total) {
+	public void setTotal(float total) {
 		this.total = total;
 	}
 
@@ -57,4 +57,4 @@ public class Carrito {
 	
 	
 	
-}
+

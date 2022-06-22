@@ -70,5 +70,8 @@ public class Cliente {
 		System.out.println("nombre del cliente: " + this.nombre);
 	}
 	
+	public String retornaQuery() {
+		return "("+this.nombre+","+this.apellido+","+this.dni+","+this.domicilio+","+this.telefono+","+this.email+")";
+	}
 	
 } // cierre de clase

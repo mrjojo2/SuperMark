@@ -41,7 +41,7 @@ public class MiCuenta {
 	}
 
 	public void setCompra(Compras compra) {
-		this.compra = compra;
+		this.compras = compra;
 	}
 	
 	
