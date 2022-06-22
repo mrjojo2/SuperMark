@@ -1,6 +1,5 @@
 
 public class Cliente {
-
 	private String nombre;
 	private String apellido;
 	private String domicilio;
@@ -65,12 +64,11 @@ public class Cliente {
 	public void setDni(int dni) {
 		this.dni = dni;
 	}
-
-	public String toString() {
-		return "Cliente [nombre=" + nombre + ", apellido=" + apellido
-				+ ", domicilio=" + domicilio + ", telefono=" + telefono
-				+ ", email=" + email + ", dni=" + dni + "]";
+	
+	
+	public void mostrar (){
+		System.out.println("nombre del cliente: " + this.nombre);
 	}
 	
-
-}
+	
+} // cierre de clase
