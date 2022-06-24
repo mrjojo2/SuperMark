@@ -1,9 +1,10 @@
 
-public class ProductoStock {
+public class ProductoStock extends Producto{
 	private int stock;
 	private float costo;
 
-	public ProductoStock(int stock, float costo) {
+	public ProductoStock(int id,String nombre, String descripcion, String marca,String categoria, int stock, float costo) {
+		super(id,nombre,descripcion,marca,categoria);
 		this.stock = stock;
 		this.costo = costo;
 	}

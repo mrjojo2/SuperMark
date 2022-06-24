@@ -1,23 +1,32 @@
 
 public class Producto {
+	//declracion de Variables
+	private int id;
 	private String nombre;
 	private String descripcion;
 	private String marca;
 	private String categoria;
-	private int cantidad;
-	private float precio;
 	
-	public Producto(String nombre, String descripcion, String marca,
-			String categoria, int cantidad, float precio) {
+	
+	//constructor
+	public Producto(int id,String nombre, String descripcion, String marca,
+			String categoria) {
 		
 		this.nombre = nombre;
 		this.descripcion = descripcion;
 		this.marca = marca;
 		this.categoria = categoria;
-		this.cantidad = cantidad;
-		this.precio = precio;
+		
 	}
-
+	
+	//metodos getters y setters
+	public int getId() {
+		return id;
+	}
+	
+	public void setId(int id) {
+		this.id=id;
+	}
 	public String getNombre() {
 		return nombre;
 	}
@@ -50,22 +59,5 @@ public class Producto {
 		this.categoria = categoria;
 	}
 
-	public int getCantidad() {
-		return cantidad;
-	}
-
-	public void setCantidad(int cantidad) {
-		this.cantidad = cantidad;
-	}
-
-	public float getPrecio() {
-		return precio;
-	}
-
-	public void setPrecio(float precio) {
-		this.precio = precio;
-	}
-	
-	
 		
 } // cierre de clase

@@ -1,3 +1,4 @@
+import java.util.Scanner;
 
 public class Principal {
 
@@ -5,13 +6,9 @@ public class Principal {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		Usuario us1 = new Usuario("mjojo2", "password");
-		   
-		   System.out.println(us1);
-		   
-			System.out.println("*********************");	   
-			
-			us1.mostrar();
+		ProductoStock miProducto;
+		
+		
 			
 	}
 	
@@ -22,8 +19,10 @@ public class Principal {
 		System.out.println("0. Salir");
 		System.out.println("Ingrese opcion:");
 		//leen respuesta
+		Scanner teclado=new Scanner(System.in);
+		int op=teclado.nextInt();
 		
-		switch (op) {
+		/*switch (op) {
 		case 1: 
 			Login login=new Login();
 			
@@ -34,7 +33,7 @@ public class Principal {
 		break;
 		default:
 			throw new IllegalArgumentException("Unexpected value: " + key);
-		}
+		}*/
 	}
 
 }
