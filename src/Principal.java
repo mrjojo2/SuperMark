@@ -37,8 +37,6 @@ public class Principal {
 		break;
 		case 2:
 		System.out.println("Ingresando a menu registro...");
-			
-			
 		break;
 		case 3:
 		System.out.println("Gracias por visitar SUPERMARK... VUELVA PRONTO");

@@ -1,17 +1,13 @@
 import java.util.Scanner;
 
-public class Registro extends Cliente  {
+public class Registro  {
 
-public Registro(String nombre, String apellido, String domicilio,
-			String telefono, String email, int dni) {
-		super(nombre, apellido, domicilio, telefono, email, dni);
-		
-		registro();
-	}
-
-//realizar metodo de registro
+				
 	
-	public void registro (){
+
+//realizando metodo de registro
+	
+	public void registroCliente (){
 		Scanner leerScanner=new Scanner(System.in);
 		String nombre=" ";
 		String apellido=" ";
@@ -21,8 +17,7 @@ public Registro(String nombre, String apellido, String domicilio,
 		String telefono=" ";
 		String clave="";
 		
-		Cliente nuevoCliente;
-		Usuario usuario;
+		
 		
 		System.out.println("Ingrese");
 		
