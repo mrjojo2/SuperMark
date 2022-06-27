@@ -24,7 +24,7 @@ public class ConexionBD {
 	}
 	public void cerrarConexion() {
 		try {
-			System.out.println("Creando sentencia....");
+			System.out.println("Cerrando conexion....");
 			stmt=connection.createStatement();
 		} catch (Exception e) {
 			// TODO: handle exception
@@ -36,10 +36,11 @@ public class ConexionBD {
 	
 	public ResultSet consultar(String consulta) {
 		try {
-			System.out.println("Creando sentencia....");
+			System.out.println("Creando consulta....");
 			stmt=connection.createStatement();
 			
 			ResultSet rs=stmt.executeQuery(consulta);
+			System.out.println("consulta exitosa");
 			return rs;
 		} catch (Exception e) {
 			// TODO: handle exception
@@ -52,9 +53,10 @@ public class ConexionBD {
 	
 	public void realizarUpdate(String sql) {
 		try {
-			System.out.println("Creando sentencia....");
+			System.out.println("Actualizando base....");
 			stmt=connection.createStatement();
-			stmt.executeUpdate(sql);			
+			stmt.executeUpdate(sql);
+			System.out.println("Base actualizada");
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();		

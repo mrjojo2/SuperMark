@@ -44,9 +44,23 @@ public class Principal {
 		
 		System.out.println(nuevoProducto.toString());
 		
-		con.conectar();
-		con.realizarUpdate(nuevoProducto.generarInsertQuery());
-		ResultSet =con.consultar("select stock from producto where nombre="+"'leche'"+";");
+		con.conectar();//abro conexion
+		con.realizarUpdate(nuevoProducto.generarInsertQuery());//realizo un insert
+		ResultSet rs=con.consultar("select nombre,stock from producto where nombre="+"'Fideos'"+";");//realizo consulta
+		try {
+			while(rs.next()) {
+				String nombreString=rs.getString("nombre");
+				int stoc=rs.getInt("stock");
+				
+				System.out.print(" Nombre:"+nombreString);
+				System.out.print(" Stock:"+stoc);
+				
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		
 		con.cerrarConexion();
 			
 	}
