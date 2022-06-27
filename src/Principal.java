@@ -1,3 +1,4 @@
+import java.sql.ResultSet;
 import java.util.Scanner;
 
 public class Principal {
@@ -6,9 +7,47 @@ public class Principal {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		ProductoStock miProducto;
+		
+		ConexionBD con=new ConexionBD();
+		
+		Scanner teclado=new Scanner(System.in);
+		
+		String nombreProducto="";
+		String descProducto="";
+		String marcaProducto="";
+		String categProducto="";
+		int stockProducto=0;
+		float costoProducto=0;
 		
 		
+		System.out.println("Ingrese el Nombre del Producto: ");
+		nombreProducto=teclado.nextLine();
+		
+		System.out.println("Ingrese la descricion del Producto: ");
+		descProducto=teclado.nextLine();
+		
+		System.out.println("Ingrese la marca del Producto: ");
+		marcaProducto=teclado.nextLine();
+		
+		System.out.println("Ingrese la categoria del Producto: ");
+		categProducto=teclado.nextLine();
+		
+		System.out.println("Ingrese el stock del Producto: ");
+		stockProducto=teclado.nextInt();
+		
+		System.out.println("Ingrese el costo del Producto: ");
+		costoProducto=teclado.nextFloat();
+		
+		ProductoStock nuevoProducto=new ProductoStock(nombreProducto,descProducto,marcaProducto,categProducto,stockProducto,costoProducto);
+		
+		System.out.println(nuevoProducto.generarInsertQuery());
+		
+		System.out.println(nuevoProducto.toString());
+		
+		con.conectar();
+		con.realizarUpdate(nuevoProducto.generarInsertQuery());
+		ResultSet =con.consultar("select stock from producto where nombre="+"'leche'"+";");
+		con.cerrarConexion();
 			
 	}
 	

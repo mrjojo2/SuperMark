@@ -9,7 +9,7 @@ public class Producto {
 	
 	
 	//constructor
-	public Producto(int id,String nombre, String descripcion, String marca,
+	public Producto(String nombre, String descripcion, String marca,
 			String categoria) {
 		
 		this.nombre = nombre;
@@ -24,9 +24,7 @@ public class Producto {
 		return id;
 	}
 	
-	public void setId(int id) {
-		this.id=id;
-	}
+	
 	public String getNombre() {
 		return nombre;
 	}

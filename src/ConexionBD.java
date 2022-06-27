@@ -5,10 +5,10 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class ConexionBD {
-	static final String JDBC_DRIVER="com.mysql.cj.jdbc.Driver";
-	static final String DB_URL="jdbc:mysql://localhost:3306/world";
-	static final String USER="root";
-	static final String PASS="1088";
+	private final String JDBC_DRIVER="com.mysql.cj.jdbc.Driver";
+	private final String DB_URL="jdbc:mysql://localhost:3306/supermarket";
+	private final String USER="root";
+	private final String PASS="1088";
 	
 	Connection connection=null;
 	Statement stmt=null;
@@ -22,17 +22,76 @@ public class ConexionBD {
 			e.printStackTrace();
 		}
 	}
+	public void cerrarConexion() {
+		try {
+			System.out.println("Creando sentencia....");
+			stmt=connection.createStatement();
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+	}
+	
+	//metodo consultas
+	
+	public ResultSet consultar(String consulta) {
+		try {
+			System.out.println("Creando sentencia....");
+			stmt=connection.createStatement();
+			
+			ResultSet rs=stmt.executeQuery(consulta);
+			return rs;
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	//metodo para update(delete,update,insert)
+	
+	public void realizarUpdate(String sql) {
+		try {
+			System.out.println("Creando sentencia....");
+			stmt=connection.createStatement();
+			stmt.executeUpdate(sql);			
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();		
+		}
+	}
 	
 	
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		
-		
-		ConexionBd cn= new ConexionBd;
+		ResultSet rs=null;
+		ConexionBD con=new ConexionBD();;
+		con.conectar();
+		rs=con.consultar("Select * from city;");
 		
 		try {
-			
+			while(rs.next()) {
+				int poblacion=rs.getInt("Population");
+				String nombreString=rs.getString("Name");
+				String codigoPais=rs.getString("CountryCode");
+				
+				System.out.println(" Codigo Pais:"+codigoPais);
+				System.out.print(" Nombre:"+nombreString);
+				System.out.print(" Poblacion:"+poblacion);
+				
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		
+		
+		con.cerrarConexion();
+		
+		/*ConexionBd cn= new ConexionBd;
+		
+		try {
 			
 			System.out.println("Creando sentencia....");
 			stmt=connection.createStatement();
@@ -65,17 +124,10 @@ public class ConexionBD {
 				e.printStackTrace();
 			}
 			
-				try {
-					if(connection!=null) {
-					connection.close();
-					}
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+				
 				
 		
-		}
+		}*/
 		
 	}
 }

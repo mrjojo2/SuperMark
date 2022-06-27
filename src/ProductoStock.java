@@ -3,8 +3,8 @@ public class ProductoStock extends Producto{
 	private int stock;
 	private float costo;
 
-	public ProductoStock(int id,String nombre, String descripcion, String marca,String categoria, int stock, float costo) {
-		super(id,nombre,descripcion,marca,categoria);
+	public ProductoStock(String nombre, String descripcion, String marca,String categoria, int stock, float costo) {
+		super(nombre,descripcion,marca,categoria);
 		this.stock = stock;
 		this.costo = costo;
 	}
@@ -26,7 +26,26 @@ public class ProductoStock extends Producto{
 	}
 	
 	// Crear metodo generar Query String
+	
+	public String generarInsertQuery() {
+		String sql="insert into producto (nombre,descripcion,marca,categoria,stock,costo) values ("+"'"+
+					this.getNombre()+"'"+','+"'"+
+					this.getDescripcion()+"'"+','+"'"+
+					this.getMarca()+"'"+','+"'"+
+					this.getCategoria()+"'"+','+this.getStock()+','+this.getCosto()+")";
+		return sql;
+	}
+
+	@Override
+	public String toString() {
+		return "ProductoStock [stock=" + stock + ", costo=" + costo + ", getNombre()=" + getNombre()
+				+ ", getDescripcion()=" + getDescripcion() + ", getMarca()=" + getMarca() + ", getCategoria()="
+				+ getCategoria() + "]";
+	}
+
+	
 	// Crear metodo mostrar
+	
 	
 	}// cierre clase
 
