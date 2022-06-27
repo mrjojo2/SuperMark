@@ -8,7 +8,7 @@ public class Principal {
 	 */
 	public static void main(String[] args) {
 		
-		ConexionBD con=new ConexionBD();
+		ConexionBD con=new ConexionBD("com.mysql.cj.jdbc.Driver","jdbc:mysql://localhost:3306/supermarket","root","1088");
 		
 		Scanner teclado=new Scanner(System.in);
 		
@@ -37,6 +37,8 @@ public class Principal {
 		
 		System.out.println("Ingrese el costo del Producto: ");
 		costoProducto=teclado.nextFloat();
+		
+		teclado.close();
 		
 		ProductoStock nuevoProducto=new ProductoStock(nombreProducto,descProducto,marcaProducto,categProducto,stockProducto,costoProducto);
 		

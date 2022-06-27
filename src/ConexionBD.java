@@ -5,13 +5,83 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class ConexionBD {
-	private final String JDBC_DRIVER="com.mysql.cj.jdbc.Driver";
-	private final String DB_URL="jdbc:mysql://localhost:3306/supermarket";
-	private final String USER="root";
-	private final String PASS="1088";
+	private String JDBC_DRIVER;//"com.mysql.cj.jdbc.Driver";
+	private String DB_URL;//"jdbc:mysql://localhost:3306/supermarket";
+	private String USER;//"root";
+	private String PASS;//"1088";
 	
-	Connection connection=null;
-	Statement stmt=null;
+	private Connection connection;
+	private Statement stmt;
+	private ResultSet rs;
+	
+	
+	public String getJDBC_DRIVER() {
+		return JDBC_DRIVER;
+	}
+
+	public void setJDBC_DRIVER(String jDBC_DRIVER) {
+		JDBC_DRIVER = jDBC_DRIVER;
+	}
+
+	public String getDB_URL() {
+		return DB_URL;
+	}
+
+	public void setDB_URL(String dB_URL) {
+		DB_URL = dB_URL;
+	}
+
+	public String getUSER() {
+		return USER;
+	}
+
+	public void setUSER(String uSER) {
+		USER = uSER;
+	}
+
+	public String getPASS() {
+		return PASS;
+	}
+
+	public void setPASS(String pASS) {
+		PASS = pASS;
+	}
+
+	public Connection getConnection() {
+		return connection;
+	}
+
+	public void setConnection(Connection connection) {
+		this.connection = connection;
+	}
+
+	public Statement getStmt() {
+		return stmt;
+	}
+
+	public void setStmt(Statement stmt) {
+		this.stmt = stmt;
+	}
+
+	public ResultSet getRs() {
+		return rs;
+	}
+
+	public void setRs(ResultSet rs) {
+		this.rs = rs;
+	}
+
+	
+	public ConexionBD(String jdbc_driver,String db_url,String user,String pass) {
+		this.JDBC_DRIVER=jdbc_driver;
+		this.DB_URL=db_url;
+		this.USER=user;
+		this.PASS=pass;
+		
+		this.connection=null;
+		this.stmt=null;
+		this.rs=null;
+	}
 	
 	public void conectar() {
 		try {
@@ -30,6 +100,22 @@ public class ConexionBD {
 			// TODO: handle exception
 			e.printStackTrace();
 		}
+		try {
+			if(stmt!=null) {
+				stmt.close();
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			if(rs!=null) {
+				rs.close();
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	//metodo consultas
@@ -39,7 +125,7 @@ public class ConexionBD {
 			System.out.println("Creando consulta....");
 			stmt=connection.createStatement();
 			
-			ResultSet rs=stmt.executeQuery(consulta);
+			rs=stmt.executeQuery(consulta);
 			System.out.println("consulta exitosa");
 			return rs;
 		} catch (Exception e) {
@@ -67,16 +153,16 @@ public class ConexionBD {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		ResultSet rs=null;
-		ConexionBD con=new ConexionBD();;
+		
+		ConexionBD con=new ConexionBD("com.mysql.cj.jdbc.Driver","jdbc:mysql://localhost:3306/supermarket","root","1088");
 		con.conectar();
-		rs=con.consultar("Select * from city;");
+		ResultSet registros=con.consultar("Select * from city;");
 		
 		try {
-			while(rs.next()) {
-				int poblacion=rs.getInt("Population");
-				String nombreString=rs.getString("Name");
-				String codigoPais=rs.getString("CountryCode");
+			while(registros.next()) {
+				int poblacion=registros.getInt("Population");
+				String nombreString=registros.getString("Name");
+				String codigoPais=registros.getString("CountryCode");
 				
 				System.out.println(" Codigo Pais:"+codigoPais);
 				System.out.print(" Nombre:"+nombreString);

@@ -28,13 +28,14 @@ public class ProductoStock extends Producto{
 	// Crear metodo generar Query String
 	
 	public String generarInsertQuery() {
-		String sql="insert into producto (nombre,descripcion,marca,categoria,stock,costo) values ("+"'"+
-					this.getNombre()+"'"+','+"'"+
-					this.getDescripcion()+"'"+','+"'"+
-					this.getMarca()+"'"+','+"'"+
-					this.getCategoria()+"'"+','+this.getStock()+','+this.getCosto()+")";
+		String sql="insert into producto (nombre,descripcion,marca,categoria,stock,costo) values ('"+
+					this.getNombre()+"','"+
+					this.getDescripcion()+"','"+
+					this.getMarca()+"','"+
+					this.getCategoria()+"',"+this.getStock()+","+this.getCosto()+")";
 		return sql;
 	}
+	 
 
 	@Override
 	public String toString() {
