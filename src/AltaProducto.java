@@ -3,14 +3,73 @@ import java.util.Scanner;
 public class AltaProducto {
 
 	// hacer metodo registrar producto
-	public void resgitrarProducto() {
+	public boolean resgitrarProducto() {
+		ConexionBD con=new ConexionBD("com.mysql.cj.jdbc.Driver","jdbc:mysql://localhost:3306/supermarket","root","AYATA88");
+		
 		Scanner teclado=new Scanner(System.in);
 		
-		System.out.println("Ingrese id del Producto");
+		String nombre="";
+		String descripcion="";
+		String marca="";
+		String categoria="";
+		String stock="";
+		String costo="";
 		
-		ProductoStock nuevoProducto;
+		//pido al usuario ingrese los datos del producto
+		System.out.println("***FORMULARIO PRODUCTO***");
+		
+		System.out.println("Ingrese el Nombre del Producto: ");
+		nombre=teclado.nextLine();
+		
+		System.out.println("Ingrese la descricion del Producto: ");
+		descripcion=teclado.nextLine();
+		
+		System.out.println("Ingrese la marca del Producto: ");
+		marca=teclado.nextLine();
+		
+		System.out.println("Ingrese la categoria del Producto: ");
+		categoria=teclado.nextLine();
+		
+		System.out.println("Ingrese el stock del Producto: ");
+		stock=teclado.nextLine();
+		
+		System.out.println("Ingrese el costo del Producto: ");
+		costo=teclado.nextLine();
+		
+		teclado.close();
+		
+		//valido los datos ingresados
+		if(validarCampos(nombre,descripcion,marca,categoria,stock,costo)==true) {
+			ProductoStock nuevoProducto=new ProductoStock(nombre,descripcion,marca,categoria,Integer.parseInt(stock),Float.parseFloat(costo));
+			con.conectar();//abro conexion
+			con.realizarUpdate(nuevoProducto.generarInsertQuery());//realizo un insert
+			con.cerrarConexion();
+			return true;
+		}else {
+			return false;
+		}
 	}
 	
+	//metodo para validar campos
+	public boolean validarCampos(String nombre,String desc,String marca,String categ,String stock,String costo) {
+		if(nombre.equalsIgnoreCase("")==false && desc.equalsIgnoreCase("")==false && marca.equalsIgnoreCase("")==false && validarNumero(stock)==true && validarNumero(costo)==true) {
+			return true;
+		}else  {
+			return false;
+		}
+	}
+	
+	//metodo para validar un string que es ingresado como numero
+	public boolean validarNumero(String num) {
+		
+		try {
+			Integer.parseInt(num);
+			return true;
+		} catch (Exception e) {
+			// TODO: handle exception
+			return false;
+		}
+	}
 	
 } // cierre de clase
 

@@ -32,7 +32,9 @@ public class ProductoStock extends Producto{
 					this.getNombre()+"','"+
 					this.getDescripcion()+"','"+
 					this.getMarca()+"','"+
-					this.getCategoria()+"',"+this.getStock()+","+this.getCosto()+")";
+					this.getCategoria()+"',"+
+					this.getStock()+","+
+					this.getCosto()+")";
 		return sql;
 	}
 	 

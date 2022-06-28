@@ -8,65 +8,16 @@ public class Principal {
 	 */
 	public static void main(String[] args) {
 		
-		ConexionBD con=new ConexionBD("com.mysql.cj.jdbc.Driver","jdbc:mysql://localhost:3306/supermarket","root","1088");
+		AltaProducto nuevoProducto=new AltaProducto();
 		
-		Scanner teclado=new Scanner(System.in);
-		
-		String nombreProducto="";
-		String descProducto="";
-		String marcaProducto="";
-		String categProducto="";
-		int stockProducto=0;
-		float costoProducto=0;
-		
-		
-		System.out.println("Ingrese el Nombre del Producto: ");
-		nombreProducto=teclado.nextLine();
-		
-		System.out.println("Ingrese la descricion del Producto: ");
-		descProducto=teclado.nextLine();
-		
-		System.out.println("Ingrese la marca del Producto: ");
-		marcaProducto=teclado.nextLine();
-		
-		System.out.println("Ingrese la categoria del Producto: ");
-		categProducto=teclado.nextLine();
-		
-		System.out.println("Ingrese el stock del Producto: ");
-		stockProducto=teclado.nextInt();
-		
-		System.out.println("Ingrese el costo del Producto: ");
-		costoProducto=teclado.nextFloat();
-		
-		teclado.close();
-		
-		ProductoStock nuevoProducto=new ProductoStock(nombreProducto,descProducto,marcaProducto,categProducto,stockProducto,costoProducto);
-		
-		System.out.println(nuevoProducto.generarInsertQuery());
-		
-		System.out.println(nuevoProducto.toString());
-		
-		con.conectar();//abro conexion
-		con.realizarUpdate(nuevoProducto.generarInsertQuery());//realizo un insert
-		ResultSet rs=con.consultar("select nombre,stock from producto where nombre="+"'Fideos'"+";");//realizo consulta
-		try {
-			while(rs.next()) {
-				String nombreString=rs.getString("nombre");
-				int stoc=rs.getInt("stock");
-				
-				System.out.print(" Nombre:"+nombreString);
-				System.out.print(" Stock:"+stoc);
-				
-			}
-		} catch (Exception e) {
-			// TODO: handle exception
-			e.printStackTrace();
+		if(nuevoProducto.resgitrarProducto()) {
+			System.out.println("Inserccion exitosa");
+		}else {
+			System.out.println("Error al ingresar los campos");
 		}
 		
-		con.cerrarConexion();
-			
+		
 	}
-	
 	public void menu() {
 		
 		System.out.println("1. Loguearse");

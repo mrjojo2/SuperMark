@@ -36,11 +36,11 @@ public class Registro {
 		nuevoCliente=new Cliente(nombre, apellido, domicilio, telefono, email, dni);
 		usuario=new Usuario(email, clave);
 		
-		Conexion db
+		/*Conexion db
 		db.conectar;
 		db.insert(nombreTabla,columnas,);
 		db.insert()
-		db.cerrar;
+		db.cerrar;*/
 		
 		return  true;
 	}
