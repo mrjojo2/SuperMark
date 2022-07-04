@@ -1,4 +1,5 @@
 
+
 public class ProductoStock {
 	private int stock;
 	private float costo;
