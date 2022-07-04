@@ -1,3 +1,4 @@
+import java.sql.Date;
 
 public class Producto {
 	//declracion de Variables
@@ -12,6 +13,16 @@ public class Producto {
 	public Producto(String nombre, String descripcion, String marca,
 			String categoria) {
 		
+		this.nombre = nombre;
+		this.descripcion = descripcion;
+		this.marca = marca;
+		this.categoria = categoria;
+		
+	}
+	
+	public Producto(int id,String nombre, String descripcion, String marca,
+			String categoria) {
+		this.id=id;
 		this.nombre = nombre;
 		this.descripcion = descripcion;
 		this.marca = marca;
@@ -56,6 +67,13 @@ public class Producto {
 	public void setCategoria(String categoria) {
 		this.categoria = categoria;
 	}
-
+	
+	public void mostrar() {
+		System.out.println("Id producto: "+id);
+		System.out.println("Nombre: "+nombre);
+		System.out.println("Descripción: "+descripcion);
+		System.out.println("Marca: "+marca);
+		System.out.println("Categoría: "+categoria);
+	}
 		
 } // cierre de clase

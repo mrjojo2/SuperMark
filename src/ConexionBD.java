@@ -1,10 +1,14 @@
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+
+
 public class ConexionBD {
+	//declaracion de variables
 	private String JDBC_DRIVER;//"com.mysql.cj.jdbc.Driver";
 	private String DB_URL;//"jdbc:mysql://localhost:3306/supermarket";
 	private String USER;//"root";
@@ -14,7 +18,7 @@ public class ConexionBD {
 	private Statement stmt;
 	private ResultSet rs;
 	
-	
+	//Metodos Getters y Setters
 	public String getJDBC_DRIVER() {
 		return JDBC_DRIVER;
 	}
@@ -71,7 +75,7 @@ public class ConexionBD {
 		this.rs = rs;
 	}
 
-	
+	//constructor
 	public ConexionBD(String jdbc_driver,String db_url,String user,String pass) {
 		this.JDBC_DRIVER=jdbc_driver;
 		this.DB_URL=db_url;
@@ -83,34 +87,56 @@ public class ConexionBD {
 		this.rs=null;
 	}
 	
+	//Metodos
+	//crea la coneccion
 	public void conectar() {
 		try {
 			Class.forName(JDBC_DRIVER);
-			System.out.println("Conectando a la base de datos...");
-			connection=DriverManager.getConnection(DB_URL,USER,PASS);
+			//System.out.println("Conectando a la base de datos...");
+			this.connection=DriverManager.getConnection(DB_URL,USER,PASS);
+			this.stmt=this.connection.createStatement();
 		}catch(Exception e){
 			e.printStackTrace();
 		}
 	}
-	public void cerrarConexion() {
+	//crea la conexion y retorna un booleano
+	public boolean abrirConecion() {
+		boolean rta=true;
 		try {
-			System.out.println("Cerrando conexion....");
-			stmt=connection.createStatement();
-		} catch (Exception e) {
-			// TODO: handle exception
+			Class.forName(JDBC_DRIVER);
+		}catch(Exception e){
 			e.printStackTrace();
 		}
 		try {
-			if(stmt!=null) {
-				stmt.close();
+			this.connection=DriverManager.getConnection(DB_URL,USER,PASS);
+			this.stmt=this.connection.createStatement();
+		} catch (Exception e) {
+			// TODO: handle exception
+			rta=false;
+		}
+		return rta;
+	}
+	//cierra la conexion
+	public void cerrarConexion() {
+		
+		try {
+			if(this.stmt!=null) {
+				this.stmt.close();
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		try {
-			if(rs!=null) {
-				rs.close();
+			if (this.connection!=null) {
+				this.connection.close();
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		try {
+			if(this.rs!=null) {
+				this.rs.close();
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -119,15 +145,15 @@ public class ConexionBD {
 	}
 	
 	//metodo consultas
-	
+	//Realiza una consulta y retorna un resulset
 	public ResultSet consultar(String consulta) {
 		try {
 			System.out.println("Creando consulta....");
-			stmt=connection.createStatement();
+			this.stmt=this.connection.createStatement();
 			
-			rs=stmt.executeQuery(consulta);
+			this.rs=this.stmt.executeQuery(consulta);
 			System.out.println("consulta exitosa");
-			return rs;
+			return this.rs;
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
@@ -135,87 +161,62 @@ public class ConexionBD {
 		}
 	}
 	
+	public String selectBD(String consulta) {
+		String string="";
+		try {
+			this.rs=this.stmt.executeQuery(consulta);
+			ResultSetMetaData rsmd=this.rs.getMetaData();
+			while(this.rs.next()) {
+				for(int i=1;i<=rsmd.getColumnCount();i++) {
+					switch(rsmd.getColumnType(i)) {
+					case 12:
+						string=string+rs.getString(i);
+						break;
+					case 4:
+						string=string+rs.getInt(i);
+						break;
+					case 93:
+						string=string+rs.getDate(i);
+						break;
+					case 8:
+						string=string+rs.getDouble(i);
+						break;
+						
+					case 3:
+						string=string+rs.getDouble(i);
+						break;
+						default:
+							System.out.println("Typo: "+rsmd.getColumnType(i));		
+					}
+					if(i<rsmd.getColumnCount()) {
+						string=string+",";
+					}			
+				}
+				string=string+";";
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			string="";
+		}
+		return string;
+	}
+	
 	//metodo para update(delete,update,insert)
 	
-	public void realizarUpdate(String sql) {
+	public boolean realizarUpdate(String sql) {
 		try {
-			System.out.println("Actualizando base....");
+			//System.out.println("Actualizando base....");
 			stmt=connection.createStatement();
 			stmt.executeUpdate(sql);
-			System.out.println("Base actualizada");
+			//System.out.println("Base actualizada");
+			return true;
 		} catch (Exception e) {
 			// TODO: handle exception
-			e.printStackTrace();		
+			e.printStackTrace();
+			return false;
 		}
 	}
 	
 	
-
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
 		
-		ConexionBD con=new ConexionBD("com.mysql.cj.jdbc.Driver","jdbc:mysql://localhost:3306/supermarket","root","1088");
-		con.conectar();
-		ResultSet registros=con.consultar("Select * from city;");
-		
-		try {
-			while(registros.next()) {
-				int poblacion=registros.getInt("Population");
-				String nombreString=registros.getString("Name");
-				String codigoPais=registros.getString("CountryCode");
-				
-				System.out.println(" Codigo Pais:"+codigoPais);
-				System.out.print(" Nombre:"+nombreString);
-				System.out.print(" Poblacion:"+poblacion);
-				
-			}
-		} catch (Exception e) {
-			// TODO: handle exception
-			e.printStackTrace();
-		}
-		
-		
-		con.cerrarConexion();
-		
-		/*ConexionBd cn= new ConexionBd;
-		
-		try {
-			
-			System.out.println("Creando sentencia....");
-			stmt=connection.createStatement();
-			String sql="Select * from city;";
-			ResultSet rs=stmt.executeQuery(sql);
-			int c=0;
-			while(rs.next()) {
-				int poblacion=rs.getInt("Population");
-				String nombreString=rs.getString("Name");
-				String codigoPais=rs.getString("CountryCode");
-				
-				System.out.println(" Codigo Pais:"+codigoPais);
-				System.out.print(" Nombre:"+nombreString);
-				System.out.print(" Poblacion:"+poblacion);
-				c++;
-			}
-			System.out.println("Cantidad de registros "+c);
-		}catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		finally {
-			
-			try {
-				if(stmt!=null) {
-					stmt.close();
-				}
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
-				
-				
-		
-		}*/
-		
-	}
 }

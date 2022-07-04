@@ -8,10 +8,9 @@ public class Principal {
 	 */
 	public static void main(String[] args) {
 		
-		/*AltaProducto nuevoProducto=new AltaProducto();
+		//AltaProducto otroProducto=new AltaProducto();
 		
-		System.out.println(nuevoProducto.existenciaProducto("DETERGENTE","ALA"));*/
-		
+		//System.out.println(otroProducto.existenciaProducto("Harina","favorita","1kg"));
 		
 		
 		
@@ -42,10 +41,40 @@ public class Principal {
 		AltaProducto nuevoProducto=new AltaProducto();
 		
 		if(nuevoProducto.resgitrarProducto()) {
-			System.out.println("Inserccion exitosa");
+			System.out.println("Registro exitoso");
 		}else {
-			System.out.println("Error al ingresar los campos");
+			System.out.println("No se a podido realizar el registro");
 		}
+		
+		/*
+		String string=nuevoProducto.queryBuscar("Harina", "favorita", "1kg");
+		
+		if (string.equalsIgnoreCase("")) {
+			System.out.println("Na hay datos que mostrar");
+		}else {
+			System.out.println("se encontraron registros");
+			String[] registros=string.split(";");
+			for(int i=0;i<registros.length;i++) {
+				String[] campos=registros[i].split(",");
+				System.out.println("Cnatidad de campos: "+campos.length);
+				System.out.println("Id: "+campos[0]);
+				System.out.println("nombre: "+campos[1]);
+				System.out.println("descripcion: "+campos[2]);
+				System.out.println("marca: "+campos[3]);
+				System.out.println("categoria: "+campos[4]);
+				System.out.println("stock: "+campos[5]);
+				System.out.println("costo: "+campos[6]);
+				System.out.println("precio: "+campos[7]);
+			}
+		}*/
+		
+		
+		
+		/*if(nuevoProducto.resgitrarProducto()) {
+			System.out.println("Inserccion exitosa");
+		//}else {
+			System.out.println("Error al ingresar los campos");
+		//}*/
 		
 		
 	}
