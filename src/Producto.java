@@ -1,4 +1,4 @@
-import java.sql.Date;
+
 
 public class Producto {
 	//declracion de Variables
@@ -7,27 +7,38 @@ public class Producto {
 	private String descripcion;
 	private String marca;
 	private String categoria;
+	private double precio;
 	
 	
+	public double getPrecio() {
+		return precio;
+	}
+
+	public void setPrecio(double precio) {
+		this.precio = precio;
+	}
+
 	//constructor
+	
 	public Producto(String nombre, String descripcion, String marca,
-			String categoria) {
+			String categoria,double precio) {
 		
 		this.nombre = nombre;
 		this.descripcion = descripcion;
 		this.marca = marca;
 		this.categoria = categoria;
+		this.precio=precio;
 		
 	}
 	
 	public Producto(int id,String nombre, String descripcion, String marca,
-			String categoria) {
+			String categoria,double precio) {
 		this.id=id;
 		this.nombre = nombre;
 		this.descripcion = descripcion;
 		this.marca = marca;
 		this.categoria = categoria;
-		
+		this.precio=precio;
 	}
 	
 	//metodos getters y setters
@@ -69,11 +80,12 @@ public class Producto {
 	}
 	
 	public void mostrar() {
-		System.out.println("Id producto: "+id);
-		System.out.println("Nombre: "+nombre);
-		System.out.println("Descripción: "+descripcion);
-		System.out.println("Marca: "+marca);
-		System.out.println("Categoría: "+categoria);
+		System.out.println("Id producto: "+this.id);
+		System.out.println("Nombre: "+this.nombre);
+		System.out.println("Descripción: "+this.descripcion);
+		System.out.println("Marca: "+this.marca);
+		System.out.println("Categoría: "+this.categoria);
+		System.out.println("Precio: "+this.precio);
 	}
 		
 } // cierre de clase

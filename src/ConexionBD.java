@@ -206,8 +206,8 @@ public class ConexionBD {
 	public boolean realizarUpdate(String sql) {
 		try {
 			//System.out.println("Actualizando base....");
-			stmt=connection.createStatement();
-			stmt.executeUpdate(sql);
+			this.stmt=connection.createStatement();
+			this.stmt.executeUpdate(sql);
 			//System.out.println("Base actualizada");
 			return true;
 		} catch (Exception e) {

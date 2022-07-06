@@ -48,9 +48,7 @@ public class AltaProducto {
 		System.out.println("Ingrese el precio del Producto: ");
 		precio=teclado.nextLine();
 		
-		teclado.close();
-		
-		
+		//teclado.close();
 		
 		//valido los datos ingresados
 		
@@ -67,6 +65,8 @@ public class AltaProducto {
 				System.out.println("El producto ya existe");
 				rta=false;
 			}	
+		}else {
+			System.out.println("Los valores ingresados son invalidos");
 		}
 		return rta;
 		
@@ -88,7 +88,7 @@ public class AltaProducto {
 	
 	//metodo para validar campos
 	public boolean validarCampos(String nombre,String desc,String marca,String categ,String stock,String costo,String precio) {
-		if(nombre.equalsIgnoreCase("")==false && desc.equalsIgnoreCase("")==false && marca.equalsIgnoreCase("")==false && validarNumeroInt(stock)==true && validarNumeroDouble(costo)==true && validarNumeroDouble(precio)) {
+		if(nombre.equalsIgnoreCase("")==false && desc.equalsIgnoreCase("")==false && marca.equalsIgnoreCase("")==false && validarNumeroInt(stock)==true && validarNumeroDouble(costo)==true && validarNumeroDouble(precio)==true) {
 			return true;
 		}else  {
 			return false;
