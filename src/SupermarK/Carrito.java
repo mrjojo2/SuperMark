@@ -1,5 +1,8 @@
+package SupermarK;
 import java.sql.Date;
 import java.util.ArrayList;
+
+import Producto.ProductoCarrito;
 
 public class Carrito {
 	private ArrayList <ProductoCarrito> productos;

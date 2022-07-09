@@ -2,7 +2,8 @@ package Producto;
 import java.sql.ResultSet;
 import java.util.Scanner;
 
-import ConexionBD.ConexionBD;
+import SupermarK.ConexionBD;
+
 
 public class AltaProducto {
 	final ConexionBD con=new ConexionBD("com.mysql.cj.jdbc.Driver","jdbc:mysql://localhost:3306/supermark","root","jochis");

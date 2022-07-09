@@ -44,7 +44,7 @@ public class Principal {
 			System.out.println("2. Iniciar Registro");
 			System.out.println("0. Salir");
 			rta = leer.nextLine();
-			
+						
 			if(rta.equalsIgnoreCase("0")==false && rta.equalsIgnoreCase("1")==false && rta.equalsIgnoreCase("2")==false){
 				System.out.println("ingrese de verdad un opcion valida...");
 			}
@@ -56,6 +56,17 @@ public class Principal {
 				
 	}
 	
+	public String validarNombre (String nombre){
+		
+		while(nombre.equalsIgnoreCase("")){
+		    System.out.print("Ingrese un Nombre*: ");
+			nombre=leer.nextLine();
+			if (!nombre.matches("^[A-Za-z ]*$")){
+				nombre="";
+		} 
+								
+	}return nombre;
 	
+	}
 	
 } // cierre de la clase
