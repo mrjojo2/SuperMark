@@ -98,13 +98,13 @@ public class MiCuenta {
 	
 	public boolean comprar() {
 		if(this.carrito.getProductos().size()>0) {
-			CRUD crud=new CRUD("com.mysql.cj.jdbc.Driver","jdbc:mysql://localhost:3306/supermark" ,"root","154199jt");
-			if(crud.conectar()) {
-				String cliente=crud.select("select cliente_id from Clientes where email='"+this.usuario.getEmail()+"';");
+			Conexion conn=new Conexion("com.mysql.cj.jdbc.Driver","jdbc:mysql://localhost:3306/supermark" ,"root","jochis");
+			if(conn.conectar()) {
+				String cliente=conn.select("select cliente_id from Clientes where email='"+this.usuario.getEmail()+"';");
 				
 				cliente=cliente.substring(0,cliente.length()-1);
-				if(crud.insert("insert into Ventas (fecha,cliente_id) values (now(),"+cliente+");")) {
-					cliente=crud.select("SELECT `AUTO_INCREMENT`\r\n"
+				if(conn.insert("insert into Ventas (fecha,cliente_id) values (now(),"+cliente+");")) {
+					cliente=conn.select("SELECT `AUTO_INCREMENT`\r\n"
 							+ "FROM  INFORMATION_SCHEMA.TABLES\r\n"
 							+ "WHERE TABLE_SCHEMA = 'supermark'\r\n"
 							+ "AND   TABLE_NAME   = 'ventas';");
@@ -112,15 +112,15 @@ public class MiCuenta {
 					cliente=cliente.substring(0, cliente.length()-1);
 					this.carrito.setId(Integer.parseInt(cliente)-1);
 					for(int i=0;i<this.carrito.getProductos().size();i++) {
-						crud.insert("insert into detalle_venta values ("+this.carrito.getId()+","+this.carrito.getProductos().get(i).getId()+","+this.carrito.getProductos().get(i).getCantidad()+");");
-						crud.insert("update Productos set stock=stock-"+this.carrito.getProductos().get(i).getCantidad()+";");
+						conn.insert("insert into detalle_venta values ("+this.carrito.getId()+","+this.carrito.getProductos().get(i).getId()+","+this.carrito.getProductos().get(i).getCantidad()+");");
+						conn.insert("update Productos set stock=stock-"+this.carrito.getProductos().get(i).getCantidad()+";");
 					}
-					crud.cerrar();
+					conn.cerrar();
 					return true;
 				}
 				else {
 					System.out.println("Error la compra no se puede realizar");
-					crud.cerrar();
+					conn.cerrar();
 					return false;
 				}
 			}

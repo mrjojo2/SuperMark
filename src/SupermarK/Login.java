@@ -44,6 +44,7 @@ public class Login {
 				if (subclave.equalsIgnoreCase(clave)){
 					
 					subtipo=conn.select("select tipo from Usuarios where email='"+email+"';");
+										
 					subtipo=subtipo.substring(0, subtipo.length()-1);
 					
 					System.out.println("Bienvenute a Supermakute");
