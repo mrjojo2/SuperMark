@@ -185,6 +185,9 @@ public class ConexionBD {
 					case 3:
 						string=string+rs.getDouble(i);
 						break;
+					case -5:
+						string=string+rs.getInt(i);
+						break;
 						default:
 							System.out.println("Typo: "+rsmd.getColumnType(i));		
 					}

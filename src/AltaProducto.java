@@ -23,7 +23,7 @@ public class AltaProducto {
 		//pido al usuario ingrese los datos del producto
 		System.out.println("***FORMULARIO PRODUCTO STOCK***");
 		
-		System.out.println("ALTA PRODUCTO");
+		System.out.println("---ALTA PRODUCTO---");
 		
 		System.out.println("Complete los datos del nuevo producto");
 		
@@ -70,20 +70,6 @@ public class AltaProducto {
 		}
 		return rta;
 		
-		//primer forma
-		/*if(validarCampos(nombre,descripcion,marca,categoria,stock,costo,precio)==true) {
-			if(existenciaProducto(nombre,marca)==false) {
-				ProductoStock nuevoProducto=new ProductoStock(nombre,descripcion,marca,categoria,Integer.parseInt(stock),Double.parseDouble(costo),Double.parseDouble(precio));
-				con.conectar();//abro conexion
-				con.realizarUpdate(nuevoProducto.generarInsertQuery());//realizo un insert
-				con.cerrarConexion();
-				return true;
-			}else {
-				return false;
-			}
-		}else {
-			return false;
-		}*/
 	}
 	
 	//metodo para validar campos

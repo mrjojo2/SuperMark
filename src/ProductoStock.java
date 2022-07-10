@@ -3,6 +3,7 @@ public class ProductoStock extends Producto{
 	private int stock;
 	private double costo;
 
+	//Constructores
 	public ProductoStock(int id,String nombre, String descripcion, String marca,String categoria, int stock, double costo,double precio) {
 		super(id,nombre,descripcion,marca,categoria,precio);
 		this.stock = stock;
@@ -15,7 +16,15 @@ public class ProductoStock extends Producto{
 		this.costo=costo;
 		// TODO Auto-generated constructor stub
 	}
-
+	//constructor copia
+	public ProductoStock(ProductoStock copia) {
+		super(copia.getId(),copia.getNombre(),copia.getDescripcion(),copia.getMarca(),copia.getCategoria(),copia.getPrecio());
+		this.stock=copia.getStock();
+		this.costo=copia.getCosto();
+	}
+	
+	//getters y setters
+	
 	public int getStock() {
 		return stock;
 	}
@@ -32,6 +41,7 @@ public class ProductoStock extends Producto{
 		this.costo = costo;
 	}
 	
+	//METODOS
 	// Crear metodo generar Query insertar String
 	
 	public String generarInsertQuery() {
@@ -47,19 +57,23 @@ public class ProductoStock extends Producto{
 	}
 	//metodos genera query para actualizar por tipo de campo y un id de producto
 	public String modificarCampo(String campo,String valor) {
-		String actualizar="Update producto set "+campo+"='"+valor+"' where idProducto="+super.getId()+";";
+		String actualizar="Update producto set "+campo+"='"+valor+"' where id_producto="+super.getId()+";";
 		return actualizar;
 	}
 	public String modificarCampo(String campo,int valor) {
-		String actualizar="Update producto set "+campo+"="+valor+" where idProducto="+super.getId()+";";
+		String actualizar="Update producto set "+campo+"="+valor+" where id_producto="+super.getId()+";";
 		return actualizar;
 	}
 	public String modificarCampo(String campo, double valor) {
-		String actualizar="Update producto set "+campo+"="+valor+" where idProducto="+super.getId()+";";
+		String actualizar="Update producto set "+campo+"="+valor+" where id_producto="+super.getId()+";";
 		return actualizar;
 	}
 	
-	
+	//generar query baja 
+	public String bajaProducto() {
+		String baja="delete from producto where id_producto="+super.getId()+";";
+		return baja;
+	}
 	
 	
 	public boolean iguales(ProductoStock aComparar) {
@@ -80,11 +94,16 @@ public class ProductoStock extends Producto{
 		System.out.println("Stock: "+this.stock);
 		System.out.println("Costo: "+this.costo);
 	}
+	
+	public void mostrarProductoCliente() {
+		super.mostrar();
+		System.out.println("Stock: "+this.stock);
+	}
 
 	public static ProductoStock buscarProducto(int idProducto) {
 		ConexionBD conexion=new ConexionBD("com.mysql.cj.jdbc.Driver","jdbc:mysql://localhost:3306/supermarket","root","AYATA88");
 		conexion.conectar();
-		String consulta=conexion.selectBD("Select * from producto where idProducto="+idProducto+";");
+		String consulta=conexion.selectBD("Select * from producto where id_producto="+idProducto+";");
 		conexion.cerrarConexion();
 		
 		if(consulta.equalsIgnoreCase("")==false) {

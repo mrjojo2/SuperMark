@@ -1,11 +1,15 @@
 
-public class ProductoCarrito {
+public class ProductoCarrito extends Producto {
 	private int cantidad;
-	private float precioVenta;
 
-	public ProductoCarrito(int cantidad, float precioVenta) {
+	public ProductoCarrito(String nombre,String descripcion, String marca, String categoria, double precio, int cantidad) {
+		super(nombre,descripcion,marca,categoria,precio);
 		this.cantidad = cantidad;
-		this.precioVenta = precioVenta;
+	}
+	
+	public ProductoCarrito(int id,String nombre,String descripcion, String marca, String categoria, double precio, int cantidad) {
+		super(id,nombre,descripcion,marca,categoria,precio);
+		this.cantidad = cantidad;
 	}
 
 	public int getCantidad() {
@@ -16,17 +20,15 @@ public class ProductoCarrito {
 		this.cantidad = cantidad;
 	}
 
-	public float getPrecioVenta() {
-		return precioVenta;
-	}
-
-	public void setPrecioVenta(float precioVenta) {
-		this.precioVenta = precioVenta;
-	}
+	
 	
 	// metodo generar Query String
-	// metodo mostar
 	
+	// metodo mostar
+	public void mostrar() {
+		super.mostrar();
+		System.out.println("Cantidad: "+this.cantidad);
+	}
 	
 }// cierre clase
 

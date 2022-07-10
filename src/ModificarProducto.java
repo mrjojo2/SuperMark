@@ -11,8 +11,8 @@ public class ModificarProducto {
 		
 		int idBuscado;
 		//Scanner entrada=new Scanner(System.in);
-		System.out.println("---FORMULARIO STOCK---");
-		System.out.println("Modificar Producto");
+		System.out.println("***FORMULARIO STOCK***");
+		System.out.println("---Modificar Producto---");
 		 
 		System.out.println("Ingrese id del producto a modificar");
 		idBuscado=teclado.nextInt();
@@ -90,7 +90,7 @@ public class ModificarProducto {
 					conexion.cerrarConexion();
 					break;
 				case 5:
-					System.out.println("Actualizar Stock.");
+					System.out.println("Ingrese valor de Stock.");
 					nuevoValor=teclado.nextLine();
 					if(validarNumeroInt(nuevoValor)) {
 						producto.setStock(Integer.parseInt(nuevoValor));
@@ -100,7 +100,7 @@ public class ModificarProducto {
 					}
 					break;
 				case 6:
-					System.out.println("Actualizar Costo.");
+					System.out.println("Ingrese el nuevo valor del Costo.");
 					nuevoValor=teclado.nextLine();
 					if(validarNumeroDouble(nuevoValor)) {
 						producto.setCosto(Double.parseDouble(nuevoValor));
@@ -110,7 +110,7 @@ public class ModificarProducto {
 					}
 					break;
 				case 7:{
-					System.out.println("Actualizar Precio.");
+					System.out.println("Ingrese el nuevo Precio.");
 					nuevoValor=teclado.nextLine();
 					if(validarNumeroDouble(nuevoValor)) {
 						producto.setPrecio(Double.parseDouble(nuevoValor));
