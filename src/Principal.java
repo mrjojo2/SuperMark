@@ -7,7 +7,7 @@ public class Principal {
 	public static void main(String[] args) {
 		
 		//menuAdminProducto();
-		/*Scanner leer=new Scanner(System.in);
+		Scanner leer=new Scanner(System.in);
 		Carrito miCarrito=new Carrito();
 		GestionCliente gc=new GestionCliente();
 		String rta="";
@@ -20,10 +20,10 @@ public class Principal {
 			gc.confirmarCompra(2, miCarrito);
 		}else {
 			System.out.println("Compra Cancelada");
-		}*/
+		}
 		
-		Compras miCompra=new Compras(1);
-		miCompra.mostrarCompras();
+		//Compras miCompra=new Compras(1);
+		//miCompra.mostrarCompras();
 	}
 	
 	public static void menuAdminProducto() {
