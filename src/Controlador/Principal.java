@@ -32,32 +32,32 @@ public class Principal {
 		switch (menu()) {
 		case 1:
 			Login login=new Login();
-			Usuario u=login.loguearme();
+			Usuario u=login.loguearme();    //inicia el logueo
 						
-			if(u!=null) {
-				if(u.getTipo().equalsIgnoreCase("c")) {
+			if(u!=null) {                   // si el logueo funcion crea un usuario llamado u
+				if(u.getTipo().equalsIgnoreCase("c")) {  // compara si la persona que ingresa es un Cliente o Adminstrado, si es Cliente continua laejecucion
 					MiCuenta mc=new MiCuenta(u);
 					
 					switch(menuMiCuenta()) {
 						case 1:
-							mc.mostrarUsuario();
+							mc.mostrarUsuario();  // muestra el usuario -  opicon (01) ver usuario
 							
 						break;
 						case 2:
-							mc.mostrarCarrito();
+							mc.mostrarCarrito();  // muesta el carrito - opcion (02) ver carrito
 						break;
 						case 3:
-							mc.mostrarHistorial();
+							mc.mostrarHistorial();   // muestra el historial de compras - opcion (03) - historial
 						break;
 						case 4:
-							ProductosStock p=new ProductosStock();
+							ProductosStock p=new ProductosStock(); // Crea un Obejto Producto para la opcion 04 - comprar
 				
 							
 							do {
 								args=new String [1];
 								System.out.println("PRODUCTOS");
 								do {
-									p.mostrar();
+									p.mostrar();            // muestra los productos
 									System.out.print("Ingrese el numero del producto:");
 									args[0]=leer.nextLine();
 									System.out.println(args[0]);
@@ -271,9 +271,9 @@ public class Principal {
 			
 		break;
 		case 2:
-			System.out.println("Iniciando Registro...");
-			Registro registro = new Registro();
-			registro.Registrarme();
+			System.out.println("Iniciando Registro...");  
+			Registro registro = new Registro(); // creo un objeto Registro
+			registro.Registrarme();  // incia el registro
 			
 		break;
 		default:
@@ -334,6 +334,7 @@ public class Principal {
 		
 		do {
 			limpiarPantalla();
+			System.out.println("---------------------------------");
 			System.out.println("1. Operar con Productos");
 			System.out.println("2. Listar Clientes");
 			System.out.println("3. Ventas");

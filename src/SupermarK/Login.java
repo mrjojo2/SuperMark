@@ -11,6 +11,7 @@ public class Login {
 		String email;
 		String clave;
 		String subclave="";
+		String subtipo="";
 		Usuario usuario=null;
 		Scanner leerScanner=new Scanner(System.in);
 		
@@ -32,20 +33,35 @@ public class Login {
 		}
 		else {
 			subclave=conn.select("select clave from Usuarios where email='"+email+"';");
+						
 			if(subclave.equalsIgnoreCase("")) {
 				System.out.println("El usuario:"+email+" no se encuentra registrado. Registrese.");
 			}
 			else {
 				
 				subclave=subclave.substring(0, subclave.length()-1);  // le saco el punto y coma a la clave devuelta para poder compararla;
+			
+				if (subclave.equalsIgnoreCase(clave)){
+					
+					subtipo=conn.select("select tipo from Usuarios where email='"+email+"';");
+					subtipo=subtipo.substring(0, subtipo.length()-1);
+					
+					System.out.println("Bienvenute a Supermakute");
+					
+					usuario = new Usuario(email, clave, subtipo);
+					
+						
+			/*	String [] ct=subclave.split(",");	// transformo en vector lo devuelto
 				
-				String [] ct=subclave.split(",");	// transformo en vector la clave devuelta
 				
-				if(ct[0].compareTo(clave)==0) {    // comparar  
-					System.out.println("Bienvenido a Supermark");
-				usuario =new Usuario(email,clave,ct[1]);  // Creo un usuario con email, clave y tipo
+				if(ct[0].compareTo(clave)==0) {    // comparar  la posicion uno (clave devuleta) con la clave
+				
+									
+					System.out.println("Bienvenute a Supermarkute");
+					
+				usuario =new Usuario(email,clave,ct[2]);  // Creo un usuario con email, clave y tipo */
 				}
-				else System.err.println("Error la contrseña no corresponde al usuario "+email);
+				else System.out.println("Error la contrseña no corresponde al usuario "+email);
 				
 			}
 		}

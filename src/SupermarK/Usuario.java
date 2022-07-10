@@ -10,7 +10,7 @@ public class Usuario {
 		super();
 		this.email = email;
 		this.clave = clave;
-		this.tipo=tipo;
+		this.tipo= tipo;
 		
 	}
 	
@@ -39,7 +39,10 @@ public class Usuario {
 	}
 	
 	public String creaQueryInsert(){
-		return "insert INTO Usuarios (email, clave, tipo) values ('"+this.email+"','"+this.clave+"','"+this.tipo+"');";
+	//	return "insert INTO Usuarios (email, clave, tipo) values ('"+this.email+"','"+this.clave+"','"+this.tipo+"');";
+		return "insert into Usuarios values ('"+this.email+"','"+this.clave+"','"+this.tipo+"');";
+		
+		
 	}
 	
 	
