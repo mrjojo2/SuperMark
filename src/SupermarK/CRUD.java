@@ -1,5 +1,5 @@
 package SupermarK;    
-    import java.sql.Connection;
+    import java.sql.Connection; 
 	import java.sql.DriverManager;
 	import java.sql.ResultSet;
 	import java.sql.SQLException;
@@ -40,7 +40,7 @@ public class CRUD {
 				connection=DriverManager.getConnection(DB_URL,USER,PASS);
 				this.stmt=this.connection.createStatement();
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
+				System.out.println("Error!!!" + e);
 				rta=false;
 			}
 			
@@ -55,7 +55,7 @@ public class CRUD {
 				this.rs=this.stmt.executeQuery(query);
 				string=rs.getCursorName();
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
+				System.out.println("Error!!!!" + e);
 				string="";
 			}
 			
@@ -68,7 +68,7 @@ public class CRUD {
 			try {
 				this.stmt.executeUpdate(query);
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
+				System.out.println("Error!!!" + e);
 				rta=false;
 			}
 			

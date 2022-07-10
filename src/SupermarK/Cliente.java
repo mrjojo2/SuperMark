@@ -70,6 +70,7 @@ public class Cliente {
 
 	public String creaQueryInsert(){
 		return "insert INTO Clientes (fecha, nombre, apellido, dni, telefono, domicilio, email) values (NOW(),'"+this.nombre+"', '"+this.apellido+"','"+this.dni+"', '"+this.telefono+"', '"+this.domicilio+"', '"+this.email+"');";
+		
 	}
 	
 	

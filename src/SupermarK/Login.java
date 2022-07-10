@@ -2,46 +2,56 @@ package SupermarK;
 
 import java.util.Scanner;
 
-
+import Conexion_BD.Conexion;
 
 public class Login {
 
-	public boolean loguearme(){
-		boolean rta=true;
+	public Usuario loguearme() {
 		
 		String email;
 		String clave;
+		String subclave="";
+		Usuario usuario=null;
+		Scanner leerScanner=new Scanner(System.in);
 		
+		System.out.println("Supermark");
+		System.out.println("Iniciar sesion");
 		
-		Scanner sc =new Scanner (System.in);
-		
-		System.out.println("SUPERMARK");
-		System.out.println("Iniciar Sesion");
-		
-		System.out.print("Email: ");
-		email = sc.nextLine();
+		System.out.print("Email:");   // no hace falta validar ya que de lo contrario no podria loguearse
+		email=leerScanner.nextLine();
 		System.out.println();
-		System.out.print("Clave :");
-		clave=sc.nextLine();
-		System.out.println();
-		
-		
-		CRUD crud = new CRUD("com.mysql.cj.jdbc.Driver","jdbc:mysql://localhost:3306/supermark","root","jochis");
-		if (crud.conectar()){
-				String resultado= crud.select("select clave from Usuarios where email='"+email+"';");
-		if (resultado.equalsIgnoreCase("")){
-			 System.out.println("Ud. no esta registrado. Registrese");
-			 System.out.println(resultado);
-		} else
-		System.out.println("Mostrando Menu de Productos");
-			 
-}	 
-		 crud.cerrar();
-	
 
-			return rta;
+		System.out.print("Clave:");  // no hace falta validar ya que de lo contrario no podria loguearse
+		clave=leerScanner.nextLine();
+		System.out.println();
+		
+		Conexion conn =new Conexion("com.mysql.cj.jdbc.Driver","jdbc:mysql://localhost:3306/supermark" ,"root","jochis");
+		
+		if(conn.conectar()==false) {
+			System.out.println("Error en la conexion");
+		}
+		else {
+			subclave=conn.select("select clave,tipo from Usuarios where email='"+email+"';");
+			if(subclave.equalsIgnoreCase("")) {
+				System.out.println("El usuario:"+email+" no se encuentra registrado. Registrese.");
+			}
+			else {
+				
+				subclave=subclave.substring(0, subclave.length()-1);  // le saco el punto y coma a la clave devuelta para poder compararla;
+				
+				String [] ct=subclave.split(",");	// transformo en vector la clave devuelta
+				
+				if(ct[0].compareTo(clave)==0) {    // comparar  
+					System.out.println("Bienvenido a Supermark");
+					usuario=new Usuario(email,clave,ct[1]);  // Creo un usuario con email, clave y tipo
+				}
+				else System.err.println("Error la contrseña no corresponde al usuario "+email);
+				
+			}
+		}
+		
+		return usuario;
+		
 	}
-}	
-	
-		
 
+}

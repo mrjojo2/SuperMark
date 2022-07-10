@@ -3,6 +3,8 @@ package SupermarK;
 
 import java.util.Scanner; 
 
+import Conexion_BD.Conexion;
+
 
 
 public class Registro {
@@ -75,22 +77,20 @@ public class Registro {
  System.out.println("La Calve ingresada es: " + clave);
  System.out.println();
  
- 
-		//	 if (validarCampos(nombre, apellido, dni, telefono, domicilio, email, clave))  // = true (exprecion regular)
-				 			 
-			CRUD crud = new CRUD("com.mysql.cj.jdbc.Driver","jdbc:mysql://localhost:3306/supermark","root","jochis"); 
+ 					 			 
+			Conexion conn = new Conexion("com.mysql.cj.jdbc.Driver","jdbc:mysql://localhost:3306/supermark","root","jochis"); 
 
 							
-				 if (crud.conectar()){
-					 String resultado= crud.select("select email from Clientes where email="+email);
+				 if (conn.conectar()){
+					 String resultado= conn.select("select email from Clientes where email='"+email+"';");
 					 if (resultado.equalsIgnoreCase("")){
 					 Cliente nuevoCliente = new Cliente (nombre, apellido, dni, telefono, domicilio, email);
-					 Usuario nuevoUsuario = new Usuario(email, clave);
-					 if (crud.insert(nuevoCliente.creaQueryInsert())){
-						 crud.insert(nuevoUsuario.creaQueryInsert());
+					 Usuario nuevoUsuario = new Usuario(email, clave, null); //ojo null al tipo ver..
+					 if (conn.insert(nuevoCliente.creaQueryInsert())){
+						 conn.insert(nuevoUsuario.creaQueryInsert());
 						 System.out.println("Felicidades usted ya es un nuevo cliente de Supermark...");
 						 System.out.println("Vuelva a ingresar con su e-mail");
-						 crud.cerrar();
+						 conn.cerrar();
 					 }
 					 else System.out.println("Error al intentar registrarse. Intente mas tarde...");	 
 				 }
@@ -156,8 +156,6 @@ public class Registro {
     }return domicilio = domic;
   }
     
-    
-    
     public String validarMail(String email){	// metodo para validar e-mail
 		String mail = email;
 	while((mail.equalsIgnoreCase("")) || (mail.matches("^[\\w]+(\\.[\\w]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})*$")==false)) {
@@ -168,8 +166,7 @@ public class Registro {
     }return email = mail;
   }
     	 
-
-  public String validarClave (String clave){ // metodo para validar la clave
+    public String validarClave (String clave){ // metodo para validar la clave
 	  	String pass = clave;
 		while(pass.equalsIgnoreCase("")) {
 			System.out.println("Ingrese una Clave");

@@ -4,13 +4,17 @@ public class Usuario {
 
 	private String email;
 	private String clave;
+	private String tipo;
 	
-	public Usuario(String email, String clave) {
+	public Usuario(String email, String clave, String tipo) {
 		super();
 		this.email = email;
 		this.clave = clave;
+		this.tipo=tipo;
+		
 	}
-
+	
+	
 	public String getEmail() {
 		return email;
 	}
@@ -27,10 +31,17 @@ public class Usuario {
 		this.clave = clave;
 	}
 	
+	public String getTipo() {
+		return tipo;
+	}
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
+	}
+	
 	public String creaQueryInsert(){
 		return "insert INTO Usuarios (email, clave) values ('"+this.email+"','"+this.clave+"');";
+		
 	}
 	
 	
-	// hacer validacion con Expreciones Regulare	
 }

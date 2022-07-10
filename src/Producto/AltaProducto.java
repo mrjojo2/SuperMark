@@ -1,21 +1,23 @@
 package Producto;
-import java.sql.ResultSet;
+import java.sql.ResultSet; 
 import java.util.Scanner;
 
+import Conexion_BD.Conexion;
 import SupermarK.ConexionBD;
 
 
 public class AltaProducto {
-	final ConexionBD con=new ConexionBD("com.mysql.cj.jdbc.Driver","jdbc:mysql://localhost:3306/supermark","root","jochis");
-
+	final Conexion conn = new Conexion("com.mysql.cj.jdbc.Driver","jdbc:mysql://localhost:3306/supermark","root","jochis");
 	// hacer metodo registrar producto
+	
+	
 	public boolean resgitrarProducto() {
 		ConexionBD con=new ConexionBD("com.mysql.cj.jdbc.Driver","jdbc:mysql://localhost:3306/supermarket","root","AYATA88");
 		//ConexionBD con=new ConexionBD("com.mysql.cj.jdbc.Driver","jdbc:mysql://localhost:3306/supermarket","root","AYATA88");
 
 		Scanner teclado=new Scanner(System.in);
 
-@@ -40,27 +42,31 @@ public boolean resgitrarProducto() {
+ public boolean resgitrarProducto() {
 
 		//valido los datos ingresados
 		if(validarCampos(nombre,descripcion,marca,categoria,stock,costo)==true) {
