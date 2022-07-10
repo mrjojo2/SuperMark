@@ -14,9 +14,9 @@ public class Login {
 		Usuario usuario=null;
 		Scanner leerScanner=new Scanner(System.in);
 		
-		System.out.println("Supermark");
-		System.out.println("Iniciar sesion");
 		
+		System.out.println("Complete los campos");
+		System.out.println("");
 		System.out.print("Email:");   // no hace falta validar ya que de lo contrario no podria loguearse
 		email=leerScanner.nextLine();
 		System.out.println();
@@ -31,7 +31,7 @@ public class Login {
 			System.out.println("Error en la conexion");
 		}
 		else {
-			subclave=conn.select("select clave,tipo from Usuarios where email='"+email+"';");
+			subclave=conn.select("select clave from Usuarios where email='"+email+"';");
 			if(subclave.equalsIgnoreCase("")) {
 				System.out.println("El usuario:"+email+" no se encuentra registrado. Registrese.");
 			}
@@ -43,7 +43,7 @@ public class Login {
 				
 				if(ct[0].compareTo(clave)==0) {    // comparar  
 					System.out.println("Bienvenido a Supermark");
-					usuario=new Usuario(email,clave,ct[1]);  // Creo un usuario con email, clave y tipo
+				usuario =new Usuario(email,clave,ct[1]);  // Creo un usuario con email, clave y tipo
 				}
 				else System.err.println("Error la contrseña no corresponde al usuario "+email);
 				

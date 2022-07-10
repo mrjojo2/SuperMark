@@ -39,8 +39,7 @@ public class Usuario {
 	}
 	
 	public String creaQueryInsert(){
-		return "insert INTO Usuarios (email, clave) values ('"+this.email+"','"+this.clave+"');";
-		
+		return "insert INTO Usuarios (email, clave, tipo) values ('"+this.email+"','"+this.clave+"','"+this.tipo+"');";
 	}
 	
 	

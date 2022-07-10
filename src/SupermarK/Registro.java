@@ -85,7 +85,7 @@ public class Registro {
 					 String resultado= conn.select("select email from Clientes where email='"+email+"';");
 					 if (resultado.equalsIgnoreCase("")){
 					 Cliente nuevoCliente = new Cliente (nombre, apellido, dni, telefono, domicilio, email);
-					 Usuario nuevoUsuario = new Usuario(email, clave, null); //ojo null al tipo ver..
+					 Usuario nuevoUsuario = new Usuario(email, clave, "C"); //ojo null al tipo ver..
 					 if (conn.insert(nuevoCliente.creaQueryInsert())){
 						 conn.insert(nuevoUsuario.creaQueryInsert());
 						 System.out.println("Felicidades usted ya es un nuevo cliente de Supermark...");

@@ -1,101 +1,89 @@
 package Producto;
-import java.sql.ResultSet; 
+
+import java.util.ArrayList;
 import java.util.Scanner;
 
 import Conexion_BD.Conexion;
-import SupermarK.ConexionBD;
+
 
 
 public class AltaProducto {
-	final Conexion conn = new Conexion("com.mysql.cj.jdbc.Driver","jdbc:mysql://localhost:3306/supermark","root","jochis");
-	// hacer metodo registrar producto
-	
-	
-	public boolean resgitrarProducto() {
-		ConexionBD con=new ConexionBD("com.mysql.cj.jdbc.Driver","jdbc:mysql://localhost:3306/supermarket","root","AYATA88");
-		//ConexionBD con=new ConexionBD("com.mysql.cj.jdbc.Driver","jdbc:mysql://localhost:3306/supermarket","root","AYATA88");
-
-		Scanner teclado=new Scanner(System.in);
-
- public boolean resgitrarProducto() {
-
-		//valido los datos ingresados
-		if(validarCampos(nombre,descripcion,marca,categoria,stock,costo)==true) {
-			ProductoStock nuevoProducto=new ProductoStock(nombre,descripcion,marca,categoria,Integer.parseInt(stock),Float.parseFloat(costo));
-			con.conectar();//abro conexion
-			con.realizarUpdate(nuevoProducto.generarInsertQuery());//realizo un insert
-			con.cerrarConexion();
-			return true;
-			if(existenciaProducto(nombre,marca)==false) {
-				ProductoStock nuevoProducto=new ProductoStock(nombre,descripcion,marca,categoria,Integer.parseInt(stock),Float.parseFloat(costo));
-				con.conectar();//abro conexion
-				con.realizarUpdate(nuevoProducto.generarInsertQuery());//realizo un insert
-				con.cerrarConexion();
-				return true;
-			}else {
-				return false;
+	public boolean registrar() {
+		boolean rta=true;
+		
+		String [] campos= {"Nombre *:","Marca *:","Categoria *:","Descripcion *:","Stock *:","Costo *:","Precio de Venta *:"};
+		String [] datos=new String[7];
+		Scanner leerScanner=new Scanner(System.in);
+		
+		System.out.println("Formulario de Registro de un Nuevo Producto");
+		
+		for(int i=0;i<campos.length;i++) {
+			System.out.print(campos[i]);
+			datos[i]=leerScanner.nextLine();
+			//System.out.println();
+		}
+		
+		ProductoStock nuevoProductoStock=new ProductoStock(datos[0], datos[1], datos[2], datos[3],Double.parseDouble(datos[6]), Integer.parseInt(datos[4]), Double.parseDouble(datos[5]));
+		Conexion conn=new Conexion("com.mysql.cj.jdbc.Driver","jdbc:mysql://localhost:3306/supermark" ,"root","jochis");
+		
+		if(conn.conectar()) {
+			
+			String string=conn.select("select producto_id, nombre,marca,categoria,descripcion,precio_venta from Productos;");
+			
+			if(string.equalsIgnoreCase("")==false) {
+				
+				//System.out.println("Pasoooo");
+				String [] registros=string.split(";");
+				ArrayList< Producto> productoStocks=new ArrayList<Producto>();
+				
+				
+				
+				for(int i=0;i<registros.length;i++) {
+					String [] registro=registros[i].split(",");
+					productoStocks.add(new Producto(Integer.parseInt(registro[0]), registro[1].trim(), registro[2].trim(), registro[3].trim(), registro[4].trim(),Double.parseDouble(registro[5])));
+				
+				}
+				
+				for(int i=0;i<registros.length;i++) {
+					productoStocks.get(i).mostrar();
+				}
+				
+				int i=0;
+				while(i<productoStocks.size() && nuevoProductoStock.iguales(productoStocks.get(i))==false) {
+					i++;
+				}
+				System.out.println(i);
+				if(i<productoStocks.size()) {
+					System.out.println("El producto ya se ecnuentra registrado el codigo es "+productoStocks.get(i).getId());
+					rta=false;
+				}
+				else {
+					
+					if(conn.insert(nuevoProductoStock.crearQueryInsert())==false) {
+						rta=false;
+					}
+						
+				}
+				
+				
 			}
-		}else {
-			return false;
-		}
-	}
-
-	//metodo para validar campos
-	public boolean validarCampos(String nombre,String desc,String marca,String categ,String stock,String costo) {
-		if(nombre.equalsIgnoreCase("")==false && desc.equalsIgnoreCase("")==false && marca.equalsIgnoreCase("")==false && validarNumero(stock)==true && validarNumero(costo)==true) {
-		if(nombre.equalsIgnoreCase("")==false && desc.equalsIgnoreCase("")==false && marca.equalsIgnoreCase("")==false && validarNumeroInt(stock)==true && validarNumeroFloat(costo)==true) {
-			return true;
-		}else  {
-			return false;
-		}
-	}
-
-	//metodo para validar un string que es ingresado como numero
-	public boolean validarNumero(String num) {
-	public boolean validarNumeroInt(String num) {
-
-		try {
-			Integer.parseInt(num);
-@@ -69,6 +75,42 @@ public boolean validarNumero(String num) {
-			// TODO: handle exception
-			return false;
-		}
-
-	}
-
-	public boolean validarNumeroFloat(String num) {
-
-		try {
-			Float.parseFloat(num);
-			return true;
-		} catch (Exception e) {
-			// TODO: handle exception
-			return false;
-		}
-
-	}
-
-	public boolean existenciaProducto(String nombre, String marca) {
-
-		con.conectar();
-		ResultSet resultado=con.consultar("Select * from producto where nombre='"+nombre+"' and marca='"+marca+"';");
-		int cont=0;
-		try {
-			while(resultado.next()) {
-				cont++;
+			else {
+				
+				if(conn.insert(nuevoProductoStock.crearQueryInsert())==false) {
+					rta=false;
+				}
+					
 			}
-
-		} catch (Exception e) {
-			// TODO: handle exception
-			e.printStackTrace();
+			
+			
+			
 		}
-
-		con.cerrarConexion();
-		if(cont==0) {
-			return false;
-		}else {
-			return true;
+		else {
+				rta=false;
+				System.out.println("Error en la conexion");
 		}
+		
+		return rta;
 	}
-
-} // cierre de clase
+	
+}

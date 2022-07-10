@@ -1,13 +1,23 @@
 package Producto;
 
 
-public class ProductoCarrito {
-	private int cantidad;
-	private float precioVenta;
+public class ProductoCarrito extends Producto{
 
-	public ProductoCarrito(int cantidad, float precioVenta) {
+	private int cantidad;
+	
+	public ProductoCarrito(String nombre, String marca, String categoria, String descripcion, int cantidad,
+			double precio) {
+		super(nombre, marca, categoria, descripcion, precio);
 		this.cantidad = cantidad;
-		this.precioVenta = precioVenta;
+	
+	}
+	
+	
+
+	public ProductoCarrito(int id, String nombre, String marca, String categoria, String descripcion, double precio,
+			int cantidad) {
+		super(id, nombre, marca, categoria, descripcion, precio);
+		this.cantidad = cantidad;
 	}
 
 	public int getCantidad() {
@@ -18,18 +28,10 @@ public class ProductoCarrito {
 		this.cantidad = cantidad;
 	}
 
-	public float getPrecioVenta() {
-		return precioVenta;
+
+	public void mostrar() {
+		super.mostrar();
+		System.out.println("Cantidad:"+this.cantidad);
+		
 	}
-
-	public void setPrecioVenta(float precioVenta) {
-		this.precioVenta = precioVenta;
-	}
-	
-	// metodo generar Query String
-	// metodo mostar
-	
-	
-}// cierre clase
-
-
+}

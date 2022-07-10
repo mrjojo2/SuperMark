@@ -1,83 +1,53 @@
 package Producto;
 
-	import java.util.ArrayList;
-import java.util.Scanner;
 
-import Conexion_BD.Conexion;
-import SupermarK.ConexionBD;
 
-public class ProductoStock {
+public class ProductoStock extends Producto {
 	
+	private int stock;
+	private double costo;
 	
-		private ArrayList<ProductoStock> productos;
-		
-		public ProductoStock() {
-			this.productos=new ArrayList<ProductoStock>();
-			obtener();
-		}
-		
-		public ArrayList<ProductoStock> getProductoStock() {
-			return this.productos;
-		}
-		
-		private void obtener() {
-			Conexion conn =new Conexion("com.mysql.cj.jdbc.Driver","jdbc:mysql://localhost:3306/supermark" ,"root","154199jt");
-			
-			if(conn.conectar()) {
-				
-				String string=conn.select("select producto_id,nombre,marca,categoria,descripcion,precio_venta,stock,costo from Productos where stock>0;");
-				if(string.equalsIgnoreCase("")==false) {
-					String [] registros=string.split(";");
-					
-					
-					for(int i=0;i<registros.length;i++) {
-						String [] registro=registros[i].split(",");
-						productos.add(new ProductoStock(Integer.parseInt(registro[0]), registro[1], registro[2], registro[3], registro[4],Double.parseDouble(registro[5]),Integer.parseInt(registro[6]),Double.parseDouble(registro[7])));
-					
-					}
-					
-				}
-				
-				
-			}
-			else System.out.println("Error en la conexion. Intente mas tarde...");
-			
-			conn.cerrar();
-		}
-		
-		public int size() {
-			return this.productos.size();
-		}
-		
-		public void mostrar() {
-			if(this.productos.size()!=0) {
-				for(int i=0;i<this.productos.size();i++) {
-					System.out.println("_______________________________________");
-					System.out.println("                  "+i+"                ");
-					this.productos.get(i).mostrar();
-					System.out.println("_______________________________________");
-				}
-			}
-			else System.out.println("Nada para mostrar");
-			
-		}
-		
-		public boolean borrar(int pos) {
-			Conexion conn=new Conexion("com.mysql.cj.jdbc.Driver","jdbc:mysql://localhost:3306/supermark" ,"root","154199jt");
-			if(conn.conectar()) {
-				if(conn.insert("delete from Productos where producto_id="+this.productos.get(pos).getId())) {
-					this.productos.remove(pos);
-					conn.cerrar();
-					return true;
-				}
-				else {
-						conn.cerrar();
-						return false;
-				}
-				
-			}
-			else return false;
-			
-		}
+	public ProductoStock(String nombre, String marca, String categoria, String descripcion, double precio, int stock,
+			double costo) {
+		super(nombre, marca, categoria, descripcion, precio);
+		this.stock = stock;
+		this.costo = costo;
+	
+	}
+
+	public ProductoStock(int id, String nombre, String marca, String categoria, String descripcion, double precio,
+			int stock, double costo) {
+		super(id, nombre, marca, categoria, descripcion, precio);
+		this.stock = stock;
+		this.costo = costo;
+	}
+
+	public int getStock() {
+		return stock;
+	}
+
+	public void setStock(int stock) {
+		this.stock = stock;
+	}
+
+	public double getCosto() {
+		return costo;
+	}
+
+	public void setCosto(double costo) {
+		this.costo = costo;
+	}
+
+	public void mostrar() {
+		super.mostrar();
+		System.out.println("Stock:"+this.stock);
+		System.out.println("Costo:"+this.costo);
 		
 	}
+	
+	public String crearQueryInsert() {
+		return "insert into Productos (fecha,nombre,marca,categoria,descripcion,stock,costo,precio_venta) values (now(),'"+super.getNombre()+"','"+super.getMarca()+"','"+super.getCategoria()+"','"+super.getDescripcion()+"',"+this.stock+","+this.costo+","+super.getPrecio()+");";
+	}
+	
+
+}
