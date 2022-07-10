@@ -1,6 +1,3 @@
-package Producto;
-
-
 import java.util.Scanner;
 
 public class ModificarProducto {
