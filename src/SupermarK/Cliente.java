@@ -9,8 +9,7 @@ public class Cliente {
 	private String telefono;
 	private String domicilio;
 	private String email;
-	public Cliente(String nombre, String apellido, String dni, String telefono,
-			String domicilio, String email) {
+	public Cliente(String nombre, String apellido, String dni, String telefono,String domicilio, String email) {
 		super();
 		this.nombre = nombre;
 		this.apellido = apellido;
@@ -21,9 +20,7 @@ public class Cliente {
 	}
 
 	
-	public Cliente(int id, String nombre, String apellido, String dni, String telefono,
-			String domicilio, String email) {
-		super();
+	public Cliente(int id, String nombre, String apellido, String dni, String telefono,String domicilio, String email) {
 		this.id = id;
 		this.nombre = nombre;
 		this.apellido = apellido;

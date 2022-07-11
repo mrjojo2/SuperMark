@@ -2,7 +2,8 @@ package SupermarK;
 
 import java.util.Scanner;
 
-import Conexion_BD.Conexion;
+//import Conexion_BD.Conexion;
+import Conexion_BD.ConexionBD;
 
 public class Login {
 
@@ -26,13 +27,13 @@ public class Login {
 		clave=leerScanner.nextLine();
 		System.out.println();
 		
-		Conexion conn =new Conexion("com.mysql.cj.jdbc.Driver","jdbc:mysql://localhost:3306/supermark" ,"root","jochis");
+		ConexionBD conn =new ConexionBD("com.mysql.cj.jdbc.Driver","jdbc:mysql://localhost:3306/supermarket" ,"root","AYATA88");
 		
-		if(conn.conectar()==false) {
+		if(conn.abrirConecion()==false) {
 			System.out.println("Error en la conexion");
 		}
 		else {
-			subclave=conn.select("select clave from Usuarios where email='"+email+"';");
+			subclave=conn.selectBD("select clave from usuario where email='"+email+"';");
 						
 			if(subclave.equalsIgnoreCase("")) {
 				System.out.println("El usuario:"+email+" no se encuentra registrado. Registrese.");
@@ -43,7 +44,7 @@ public class Login {
 			
 				if (subclave.equalsIgnoreCase(clave)){
 					
-					subtipo=conn.select("select tipo from Usuarios where email='"+email+"';");
+					subtipo=conn.selectBD("select tipo from usuario where email='"+email+"';");
 					subtipo=subtipo.substring(0, subtipo.length()-1);
 					
 					System.out.println("Bienvenute a Supermakute");

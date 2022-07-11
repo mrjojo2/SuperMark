@@ -1,8 +1,7 @@
-<<<<<<< HEAD:src/Producto/BajaProducto.java
 package Producto;
-=======
 import java.util.Scanner;
->>>>>>> e777162da4e8cdd16e3ea33e2392352c3d42927a:src/BajaProducto.java
+
+import Conexion_BD.ConexionBD;
 
 public class BajaProducto {
 	final ConexionBD con=new ConexionBD("com.mysql.cj.jdbc.Driver","jdbc:mysql://localhost:3306/supermarket","root","AYATA88");

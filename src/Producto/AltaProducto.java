@@ -1,89 +1,145 @@
 package Producto;
 
-import java.util.ArrayList;
+
+import java.sql.ResultSet;
+
 import java.util.Scanner;
 
-import Conexion_BD.Conexion;
-
-
+import Conexion_BD.ConexionBD;
 
 public class AltaProducto {
-	public boolean registrar() {
-		boolean rta=true;
+	final ConexionBD con=new ConexionBD("com.mysql.cj.jdbc.Driver","jdbc:mysql://localhost:3306/supermarket","root","AYATA88");
+
+	// hacer metodo registrar producto
+	public boolean resgitrarProducto() {
+		//ConexionBD con=new ConexionBD("com.mysql.cj.jdbc.Driver","jdbc:mysql://localhost:3306/supermarket","root","AYATA88");
 		
-		String [] campos= {"Nombre *:","Marca *:","Categoria *:","Descripcion *:","Stock *:","Costo *:","Precio de Venta *:"};
-		String [] datos=new String[7];
-		Scanner leerScanner=new Scanner(System.in);
+		Scanner teclado=new Scanner(System.in);
+		boolean rta=false;
 		
-		System.out.println("Formulario de Registro de un Nuevo Producto");
+		String nombre="";
+		String descripcion="";
+		String marca="";
+		String categoria="";
+		String stock="";
+		String costo="";
+		String precio="";
 		
-		for(int i=0;i<campos.length;i++) {
-			System.out.print(campos[i]);
-			datos[i]=leerScanner.nextLine();
-			//System.out.println();
-		}
+		//pido al usuario ingrese los datos del producto
+		System.out.println("***FORMULARIO PRODUCTO STOCK***");
 		
-		ProductoStock nuevoProductoStock=new ProductoStock(datos[0], datos[1], datos[2], datos[3],Double.parseDouble(datos[6]), Integer.parseInt(datos[4]), Double.parseDouble(datos[5]));
-		Conexion conn=new Conexion("com.mysql.cj.jdbc.Driver","jdbc:mysql://localhost:3306/supermark" ,"root","jochis");
+		System.out.println("---ALTA PRODUCTO---");
 		
-		if(conn.conectar()) {
-			
-			String string=conn.select("select producto_id, nombre,marca,categoria,descripcion,precio_venta from Productos;");
-			
-			if(string.equalsIgnoreCase("")==false) {
-				
-				//System.out.println("Pasoooo");
-				String [] registros=string.split(";");
-				ArrayList< Producto> productoStocks=new ArrayList<Producto>();
-				
-				
-				
-				for(int i=0;i<registros.length;i++) {
-					String [] registro=registros[i].split(",");
-					productoStocks.add(new Producto(Integer.parseInt(registro[0]), registro[1].trim(), registro[2].trim(), registro[3].trim(), registro[4].trim(),Double.parseDouble(registro[5])));
-				
-				}
-				
-				for(int i=0;i<registros.length;i++) {
-					productoStocks.get(i).mostrar();
-				}
-				
-				int i=0;
-				while(i<productoStocks.size() && nuevoProductoStock.iguales(productoStocks.get(i))==false) {
-					i++;
-				}
-				System.out.println(i);
-				if(i<productoStocks.size()) {
-					System.out.println("El producto ya se ecnuentra registrado el codigo es "+productoStocks.get(i).getId());
-					rta=false;
-				}
-				else {
-					
-					if(conn.insert(nuevoProductoStock.crearQueryInsert())==false) {
-						rta=false;
-					}
-						
-				}
-				
-				
-			}
-			else {
-				
-				if(conn.insert(nuevoProductoStock.crearQueryInsert())==false) {
-					rta=false;
-				}
-					
-			}
-			
-			
-			
-		}
-		else {
+		System.out.println("Complete los datos del nuevo producto");
+		
+		System.out.println("Ingrese el Nombre del Producto: ");
+		nombre=teclado.nextLine();
+		
+		System.out.println("Ingrese la descricion del Producto: ");
+		descripcion=teclado.nextLine();
+		
+		System.out.println("Ingrese la marca del Producto: ");
+		marca=teclado.nextLine();
+		
+		System.out.println("Ingrese la categoria del Producto: ");
+		categoria=teclado.nextLine();
+		
+		System.out.println("Ingrese el stock del Producto: ");
+		stock=teclado.nextLine();
+		
+		System.out.println("Ingrese el costo del Producto: ");
+		costo=teclado.nextLine();
+		
+		System.out.println("Ingrese el precio del Producto: ");
+		precio=teclado.nextLine();
+		
+		//teclado.close();
+		
+		//valido los datos ingresados
+		
+		if(validarCampos(nombre,descripcion,marca,categoria,stock,costo,precio)==true) {
+			String string=queryBuscar(nombre,marca,descripcion);
+			if(string.equalsIgnoreCase("")) {
+				ProductoStock nuevoProducto=new ProductoStock(nombre,descripcion,marca,categoria,Integer.parseInt(stock),Double.parseDouble(costo),Double.parseDouble(precio));
+				con.conectar();
+				if(con.realizarUpdate(nuevoProducto.generarInsertQuery())) {
+					rta=true;
+				}else rta=false;
+				con.cerrarConexion();
+			}else {
+				System.out.println("El producto ya existe");
 				rta=false;
-				System.out.println("Error en la conexion");
+			}	
+		}else {
+			System.out.println("Los valores ingresados son invalidos");
 		}
-		
 		return rta;
+		
 	}
 	
-}
+	//metodo para validar campos
+	public boolean validarCampos(String nombre,String desc,String marca,String categ,String stock,String costo,String precio) {
+		if(nombre.equalsIgnoreCase("")==false && desc.equalsIgnoreCase("")==false && marca.equalsIgnoreCase("")==false && validarNumeroInt(stock)==true && validarNumeroDouble(costo)==true && validarNumeroDouble(precio)==true) {
+			return true;
+		}else  {
+			return false;
+		}
+	}
+	
+	//metodo para validar un string que es ingresado como numero
+	public boolean validarNumeroInt(String num) {
+		
+		try {
+			Integer.parseInt(num);
+			return true;
+		} catch (Exception e) {
+			// TODO: handle exception
+			return false;
+		}
+		
+	}
+	
+	public boolean validarNumeroDouble(String num) {
+		
+		try {
+			Double.parseDouble(num);
+			return true;
+		} catch (Exception e) {
+			// TODO: handle exception
+			return false;
+		}
+		
+	}
+	
+	public boolean existenciaProducto(String nombre, String marca, String descripcion) {
+		
+		con.conectar();
+		ResultSet resultado=con.consultar("Select * from producto where nombre='"+nombre+"' and marca='"+marca+"' and descripcion='"+descripcion+"';");
+		int cont=0;
+		try {
+			while(resultado.next()) {
+				cont++;
+			}
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		
+		con.cerrarConexion();
+		if(cont==0) {
+			return false;
+		}else {
+			return true;
+		}
+	}
+	
+	public String queryBuscar(String nombre, String marca,String descripcion) {
+		con.conectar();
+		String registros=con.selectBD("Select * from producto where nombre='"+nombre+"' and marca='"+marca+"' and descripcion='"+descripcion+"';");
+		con.cerrarConexion();
+		return registros;
+	}
+	
+} // cierre de clase
+

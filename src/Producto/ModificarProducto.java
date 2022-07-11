@@ -1,7 +1,7 @@
 package Producto;
-
-
 import java.util.Scanner;
+
+import Conexion_BD.ConexionBD;
 
 public class ModificarProducto {
 	Scanner teclado=new Scanner(System.in);

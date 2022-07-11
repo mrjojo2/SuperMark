@@ -1,6 +1,8 @@
 package SupermarK;
-
 import java.util.ArrayList;
+
+import Conexion_BD.ConexionBD;
+import Producto.ProductoCarrito;
 public class Compras {
 	private ArrayList<Carrito> compras;
 	final ConexionBD con=new ConexionBD("com.mysql.cj.jdbc.Driver","jdbc:mysql://localhost:3306/supermarket","root","AYATA88");
@@ -57,5 +59,3 @@ public class Compras {
 	}
 		
 } // cierre de clases
-
-

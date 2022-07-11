@@ -4,6 +4,7 @@ package SupermarK;
 import java.util.Scanner; 
 
 import Conexion_BD.Conexion;
+import Conexion_BD.ConexionBD;
 
 
 
@@ -78,19 +79,19 @@ public class Registro {
  System.out.println();
  
  					 			 
-			Conexion conn = new Conexion("com.mysql.cj.jdbc.Driver","jdbc:mysql://localhost:3306/supermark","root","jochis"); 
+			ConexionBD conn = new ConexionBD("com.mysql.cj.jdbc.Driver","jdbc:mysql://localhost:3306/supermark","root","AYATA88"); 
 
 							
-				 if (conn.conectar()){
-					 String resultado= conn.select("select email from Clientes where email='"+email+"';");
+				 if (conn.abrirConecion()){
+					 String resultado= conn.selectBD("select email from clientes where email='"+email+"';");
 					 if (resultado.equalsIgnoreCase("")){
 					 Cliente nuevoCliente = new Cliente (nombre, apellido, dni, telefono, domicilio, email);
 					 Usuario nuevoUsuario = new Usuario(email, clave, "C"); //ojo null al tipo ver..
-					 if (conn.insert(nuevoCliente.creaQueryInsert())){
-						 conn.insert(nuevoUsuario.creaQueryInsert());
+					 if (conn.realizarUpdate(nuevoCliente.creaQueryInsert())){
+						 conn.realizarUpdate(pass);
 						 System.out.println("Felicidades usted ya es un nuevo cliente de Supermark...");
 						 System.out.println("Vuelva a ingresar con su e-mail");
-						 conn.cerrar();
+						 conn.cerrarConexion();
 					 }
 					 else System.out.println("Error al intentar registrarse. Intente mas tarde...");	 
 				 }

@@ -1,4 +1,7 @@
+package Producto;
 import java.util.ArrayList;
+
+import Conexion_BD.ConexionBD;
 
 public class ListarStock {
 	//Esta clase sirve para listar los productos

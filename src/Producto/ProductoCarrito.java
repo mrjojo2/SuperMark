@@ -1,22 +1,15 @@
 package Producto;
 
-
-public class ProductoCarrito extends Producto{
-
+public class ProductoCarrito extends Producto {
 	private int cantidad;
-	
-	public ProductoCarrito(String nombre, String marca, String categoria, String descripcion, int cantidad,
-			double precio) {
-		super(nombre, marca, categoria, descripcion, precio);
+
+	public ProductoCarrito(String nombre,String descripcion, String marca, String categoria, double precio, int cantidad) {
+		super(nombre,descripcion,marca,categoria,precio);
 		this.cantidad = cantidad;
-	
 	}
 	
-	
-
-	public ProductoCarrito(int id, String nombre, String marca, String categoria, String descripcion, double precio,
-			int cantidad) {
-		super(id, nombre, marca, categoria, descripcion, precio);
+	public ProductoCarrito(int id,String nombre,String descripcion, String marca, String categoria, double precio, int cantidad) {
+		super(id,nombre,descripcion,marca,categoria,precio);
 		this.cantidad = cantidad;
 	}
 
@@ -28,10 +21,16 @@ public class ProductoCarrito extends Producto{
 		this.cantidad = cantidad;
 	}
 
-
+	
+	
+	// metodo generar Query String
+	
+	// metodo mostar
 	public void mostrar() {
 		super.mostrar();
-		System.out.println("Cantidad:"+this.cantidad);
-		
+		System.out.println("Cantidad: "+this.cantidad);
 	}
-}
+	
+}// cierre clase
+
+

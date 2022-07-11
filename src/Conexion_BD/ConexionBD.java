@@ -1,3 +1,4 @@
+package Conexion_BD;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -187,6 +188,9 @@ public class ConexionBD {
 						break;
 					case -5:
 						string=string+rs.getInt(i);
+						break;
+					case 1:
+						string=string+rs.getString(i);
 						break;
 						default:
 							System.out.println("Typo: "+rsmd.getColumnType(i));		

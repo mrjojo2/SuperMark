@@ -1,5 +1,10 @@
+package SupermarK;
 import java.util.ArrayList;
 import java.util.Scanner;
+
+import Conexion_BD.ConexionBD;
+import Producto.ListarStock;
+import Producto.ProductoCarrito;
 
 public class GestionCliente {
 	final ConexionBD con=new ConexionBD("com.mysql.cj.jdbc.Driver","jdbc:mysql://localhost:3306/supermarket","root","AYATA88");
@@ -10,10 +15,12 @@ public class GestionCliente {
 		return total;
 	}
 	
-	public void confirmarCompra(Integer idCliente,Carrito carrito){
+	public void confirmarCompra(Usuario usuario,Carrito carrito){
 		int tam=carrito.getProductos().size();
 		if(tam!=0) {
 			if(con.abrirConecion()) {
+				String cliente=con.selectBD("select cliente_id from clientes where email='"+usuario.getEmail()+"';");
+				String idCliente=cliente.substring(0,cliente.length()-1);
 				if(con.realizarUpdate("Insert into ventas (fecha,cliente_id) values (NOW(),"+idCliente+");")) {
 					String string=con.selectBD("SELECT `AUTO_INCREMENT` FROM  INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'supermarket' AND   TABLE_NAME   = 'ventas';");
 					int idVenta=Integer.parseInt(string.substring(0,string.length()-1))-1;
